@@ -1,0 +1,10 @@
+[package]
+name = "circuit-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+circuit-lib = { path = "../circuit-lib" }
+
+clap = { version = "4.1", features = ["derive"] }
+anyhow = "1.0"

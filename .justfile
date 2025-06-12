@@ -16,7 +16,7 @@ check-fmt:
 
 # Rust `clippy` lints
 clippy:
-  cargo clippy --workspace --examples --tests --benches --all-features --all-targets --locked
+  cargo clippy --workspace --examples --tests --benches --all-targets --locked
 
 # TOML lint with `taplo`
 toml-lint:

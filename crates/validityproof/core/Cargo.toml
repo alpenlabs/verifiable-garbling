@@ -1,0 +1,9 @@
+[package]
+name = "validityproof-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+garble = { path = "../../garble" }
+rkyv = "0.8.10"
+serde = "1.0.219"
