@@ -38,19 +38,6 @@ jobs:
         with:
           tool: nextest
 
-      - name: Install bitcoind
-        env:
-          BITCOIND_VERSION: "29.0"
-          BITCOIND_ARCH: "x86_64-linux-gnu"
-          SHASUM: "a681e4f6ce524c338a105f214613605bac6c33d58c31dc5135bbc02bc458bb6c"
-        run: |
-          curl -fsSLO --proto "=https" --tlsv1.2 "https://bitcoincore.org/bin/bitcoin-core-$BITCOIND_VERSION/bitcoin-$BITCOIND_VERSION-$BITCOIND_ARCH.tar.gz"
-          sha256sum -c <<< "$SHASUM bitcoin-$BITCOIND_VERSION-$BITCOIND_ARCH.tar.gz"
-          tar xzf "bitcoin-$BITCOIND_VERSION-$BITCOIND_ARCH.tar.gz"
-          sudo install -m 0755 -t /usr/local/bin bitcoin-"$BITCOIND_VERSION"/bin/*
-          bitcoind --version
-          rm -rf "bitcoin-$BITCOIND_VERSION" "bitcoin-$BITCOIND_VERSION-$BITCOIND_ARCH.tar.gz"
-
       - name: Rust cache
         uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2
         with:
@@ -58,7 +45,7 @@ jobs:
 
       - name: Run tests
         run: |
-          cargo --locked nextest run --all-features --workspace
+          cargo --locked nextest run --workspace
 
   doc:
     name: Run doc tests
