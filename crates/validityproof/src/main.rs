@@ -3,8 +3,8 @@ use garbling_methods::{FREEXORGARBLE_ELF, FREEXORGARBLE_ID};
 use risc0_zkvm::{default_prover, ExecutorEnv};
 use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allocator::Arena};
 use std::env;
-use std::fs::{File};
-use std::io::{Write};
+use std::fs::File;
+use std::io::Write;
 use validityproof_core::{ArchivedGuestOutput, GuestOutput};
 
 fn main() {

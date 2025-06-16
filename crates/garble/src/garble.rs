@@ -254,5 +254,4 @@ mod tests {
         assert_eq!(&xor_labels(&pad_sha(&l_a1, &l_b0), &t.table[2]), &l_c0);
         assert_eq!(&xor_labels(&pad_sha(&l_a1, &l_b1), &t.table[3]), &l_c1);
     }
-
 }
