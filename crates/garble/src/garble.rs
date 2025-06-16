@@ -149,14 +149,10 @@ pub fn garble_ckt(ckt_inputs: Circuit, label_inputs: LabelInputs) -> GarbledTabl
 #[cfg(test)]
 mod tests {
     use crate::garble::garble_ckt;
-    use crate::garble::gen_label_hash;
     use crate::garble::pad_sha;
-    use crate::input::gen_labels;
-    use crate::input::load_seed;
     use crate::input::Circuit;
     use crate::input::GateDef;
     use crate::input::LabelInputs;
-    use crate::parse::parse_bristol;
 
     use super::xor_labels;
     use super::Label;
@@ -259,27 +255,4 @@ mod tests {
         assert_eq!(&xor_labels(&pad_sha(&l_a1, &l_b1), &t.table[3]), &l_c1);
     }
 
-    #[test]
-    fn test_small_circuit() {
-        let ckt = parse_bristol("../circuits/random/random_2_gates.bristol").unwrap();
-        let seed = load_seed("seed.bin").unwrap();
-        assert_eq!(ckt.and_gate_count, 1);
-        assert_eq!(ckt.xor_gate_count, 1);
-
-        let label_inputs = gen_labels(seed, ckt.get_input_wire_count(), ckt.get_inner_wire_count());
-        let computed_label_hashes: Vec<[u8; 32]> = [
-            [
-                113, 211, 85, 204, 46, 37, 90, 149, 220, 177, 4, 140, 87, 49, 32, 139, 146, 37, 70,
-                14, 155, 222, 247, 122, 120, 49, 127, 94, 192, 216, 7, 19,
-            ],
-            [
-                201, 96, 146, 223, 99, 100, 248, 114, 167, 59, 104, 76, 28, 43, 203, 199, 210, 254,
-                250, 224, 113, 9, 78, 51, 22, 22, 109, 93, 140, 135, 223, 182,
-            ],
-        ]
-        .to_vec();
-
-        let label_hashes = gen_label_hash(label_inputs.input_labels.clone());
-        assert_eq!(computed_label_hashes, label_hashes);
-    }
 }

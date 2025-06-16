@@ -137,7 +137,7 @@ mod tests {
         let _ = OsRng.try_fill_bytes(&mut buf);
 
         // Write them exactly as raw bytes to "seed.bin"
-        fs::write(path, &buf)?;
+        fs::write(path, buf)?;
         Ok(())
     }
 

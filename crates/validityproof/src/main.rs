@@ -1,13 +1,10 @@
-use bytemuck::cast_slice;
-use garble::input::{gen_labels, load_seed, read_input_ckt, Circuit};
+use garble::input::{gen_labels, load_seed, read_input_ckt};
 use garbling_methods::{FREEXORGARBLE_ELF, FREEXORGARBLE_ID};
-use risc0_zkvm::serde::to_vec;
 use risc0_zkvm::{default_prover, ExecutorEnv};
 use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allocator::Arena};
 use std::env;
-use std::fs::{self, File};
-use std::io::{self, Write};
-use std::path::Path;
+use std::fs::{File};
+use std::io::{Write};
 use validityproof_core::{ArchivedGuestOutput, GuestOutput};
 
 fn main() {
@@ -53,7 +50,7 @@ fn main() {
     // create a struct to store the input circuit and labels
     let input = validityproof_core::GuestInput {
         input_circuit: input_ckt,
-        labels: labels,
+        labels,
     };
 
     // serialize inputs to the guest using rkyv
