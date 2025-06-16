@@ -77,6 +77,14 @@ jobs:
         with:
           cache-on-failure: true
 
+      - name: Install rzup and risczero
+        run: |
+          set -e
+          curl -L https://risczero.com/install | bash
+          export PATH="$HOME/.risc0/bin:$PATH"
+          rzup install cargo-risczero 2.0.2
+          rzup install rust 1.85.0 # set this to the desired risc0 rust toolchain.
+
       - name: Run doctests
         run: cargo test --doc
 
