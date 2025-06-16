@@ -43,6 +43,16 @@ jobs:
         with:
           cache-on-failure: true
 
+      - name: Install rzup
+        run: curl -L https://risczero.com/install | bash
+
+      - name: Install risczero using rzup
+        run: |
+          set -e
+          rzup install rust 1.85.0 # set this to the desired risc0 rust toolchain.
+          rzup install r0vm 2.0.2 # should be the same version as cargo-risczero and risc0-zkvm crate
+          rzup install cargo-risczero 2.0.2
+
       - name: Run tests
         run: |
           cargo --locked nextest run --workspace

@@ -67,7 +67,7 @@ fn main() {
     let input_bytes_len = input_bytes.len();
 
     // print the size of serialized input in bytes
-    println!("Input Bytes Length: {} bytes", input_bytes_len);
+    println!("Input Bytes Length: {input_bytes_len} bytes");
 
     // initialize the env and pass the input input and labels to guest
     let env = ExecutorEnv::builder()
@@ -86,10 +86,9 @@ fn main() {
     let receipt = prove_info.receipt;
 
     // store the details of execution in a log file
-    let log_path = format!(
-        "logs/circuit_{}gates_{}and_{}xor.txt",
-        gate_count, and_gate_count, xor_gate_count
-    );
+    let log_path =
+        format!("logs/circuit_{gate_count}gates_{and_gate_count}and_{xor_gate_count}xor.txt");
+
     let details = format!(
         "Circuit: {} gates, {} AND gates, {} XOR gates\nInput Wire Count: {}\nInner Wire Count: {}\nInput Bytes Length: {:.2} MB\nCycles: {}\n",
         gate_count,
