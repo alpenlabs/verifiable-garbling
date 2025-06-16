@@ -31,10 +31,9 @@ jobs:
         run: |
           set -e
           curl -L https://risczero.com/install | bash
-          source "/home/runner/.bashrc"
+          export PATH="$HOME/runner/.risc0/bin:$PATH"
           rzup install cargo-risczero 2.0.2
           rzup install rust 1.85.0 # set this to the desired risc0 rust toolchain.
-          rzup install r0vm 2.0.2 # should be the same version as cargo-risczero and risc0-zkvm crate
 
       - name: Rust cache
         uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2
