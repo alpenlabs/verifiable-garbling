@@ -73,8 +73,8 @@ fn main() -> Result<()> {
         Commands::Io { file } => {
             let circuit = Circuit::from_bristol_file(&file)?;
             let (ins, outs) = circuit.enumerate_io();
-            println!("Primary inputs : {:?}", ins);
-            println!("Primary outputs: {:?}", outs);
+            println!("Primary inputs : {ins:?}");
+            println!("Primary outputs: {outs:?}");
         } // Commands::GateCount { file } => {
           //     let circuit = Circuit::from_bristol_file(&file)?;
           //     println!("Total gates: {}", circuit.gate_count());
