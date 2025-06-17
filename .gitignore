@@ -93,4 +93,4 @@ coverage.xml
 *.bak
 
 # the circuit files can be too large and it is better to generate it locally
-crates/circuits/random/*
+circuits/random/*
