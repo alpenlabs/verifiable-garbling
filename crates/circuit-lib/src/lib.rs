@@ -27,7 +27,7 @@ impl Display for GateType {
             GateType::Xor => "XOR",
             GateType::Inv => "INV",
         };
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }
 
