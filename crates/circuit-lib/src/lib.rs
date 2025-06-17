@@ -42,7 +42,7 @@ pub struct Gate {
 }
 
 impl Gate {
-    /// Render this gate as: <fan_in> <fan_out> <in0> ...<in_n> <out>
+    /// Render this gate as: fan_in fan_out in0 ...in_n out
     pub fn to_bristol_string(&self) -> String {
         let out = self.output;
         let fan_in = self.inputs.len();
