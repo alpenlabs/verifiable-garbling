@@ -21,16 +21,14 @@ The above diagram can be accessed by the [permalink](https://excalidraw.com/#jso
 
 ## Crates and Directories
 
-- **circuit-utils**\
-   Utilities to work with boolean circuit. Includes a parser and way to generate random boolean circuits with desired number of gates.
+- **bin/circuit-utils**\
+   Utilities to work with boolean circuit. Includes a parser for bristol fashion circuits and way to generate random boolean circuits with desired number of gates.
 - **circuits**\
   Contains few example circuits and their description
-- **gen_inputs**\
-    generates input to be fed into bento
-- **garble**\
+- **crates/garble**\
   the main crate that parses bristol fashion files and generates garbled tables
-- **validityproof**\
-  Generates proof using risc0
+- **bin/validityproof**\
+  Generates proof of correct garbling using risc0
 - **logs**\
   Stores info of runs of proof generation
 
@@ -49,7 +47,7 @@ The `boolean_file` is representation of the boolen circuit in bristol fashion as
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
 ```{bash}
-RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof circuits/example1/example1.bristol garble/seed.bin
+RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof circuits/example1/example1.bristol seed.bin
 ```
 
 If you only want to generate mock tests and get details of cycle counts, pass the env variable `RISC0_DEV_MODE=1`
