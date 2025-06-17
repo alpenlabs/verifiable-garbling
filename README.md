@@ -5,6 +5,9 @@
 [![ci](https://github.com/alpenlabs/verifiable-garbling/actions/workflows/lint.yml/badge.svg?event=push)](https://github.com/alpenlabs/verifiable-garbling/actions)
 [![docs](https://img.shields.io/badge/docs-docs.rs-orange)](https://docs.rs/rust-template)
 
+> [!IMPORTANT]
+> This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
+
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
 Our garbling circuit protocol needs to maliciously secure.
