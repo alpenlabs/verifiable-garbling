@@ -284,7 +284,7 @@ impl Circuit {
 
             //increment the available wires to add the output of the gate being generated
             let out = available;
-            available = available + 1;
+            available += 1;
 
             gates.push(Gate {
                 gate_type,
