@@ -1,7 +1,7 @@
 use anyhow::Result;
 use circuit_lib::Circuit;
 use clap::{Parser, Subcommand};
-use std::{fs::File, io::stdout, path::PathBuf};
+use std::{fs::File, path::PathBuf};
 
 #[derive(Parser)]
 #[command(name = "circuit-tool", version)]
@@ -37,7 +37,6 @@ enum Commands {
         #[arg(value_name = "FILE")]
         file: PathBuf,
     },
-
     // /// Count all gates
     // GateCount {
     //     #[arg(value_name = "FILE")]
@@ -65,20 +64,18 @@ fn main() -> Result<()> {
 
             let file = File::create(&output)
                 .map_err(|e| anyhow::anyhow!("couldn't open {}: {}", output.display(), e))?;
-            
+
             circuit.write_bristol_fashion(file)?;
 
             println!("Wrote random circuit to {}", output.display());
         }
 
         Commands::Io { file } => {
-              let circuit = Circuit::from_bristol_file(&file)?;
-              let (ins, outs) = circuit.enumerate_io();
-              println!("Primary inputs : {:?}", ins);
-              println!("Primary outputs: {:?}", outs);
-          }
-
-          // Commands::GateCount { file } => {
+            let circuit = Circuit::from_bristol_file(&file)?;
+            let (ins, outs) = circuit.enumerate_io();
+            println!("Primary inputs : {:?}", ins);
+            println!("Primary outputs: {:?}", outs);
+        } // Commands::GateCount { file } => {
           //     let circuit = Circuit::from_bristol_file(&file)?;
           //     println!("Total gates: {}", circuit.gate_count());
           // }

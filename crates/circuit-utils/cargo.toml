@@ -1,2 +1,0 @@
-[workspace]
-members = ["circuit-lib", "circuit-cli"]

@@ -117,8 +117,8 @@ impl Circuit {
             .context("missing header line")?
             .split_ascii_whitespace()
             .collect();
-        let num_inputs: usize = header[0].parse()?;
-        let num_input_wires: usize = header[1].parse()?;
+        let _num_inputs: usize = header[0].parse()?;
+        let _num_input_wires: usize = header[1].parse()?;
 
         // Parse header_line3: Output description
         // TODO: (mukesh) considers only 1 output, generalize it.
@@ -127,15 +127,15 @@ impl Circuit {
             .context("missing header line")?
             .split_ascii_whitespace()
             .collect();
-        let num_outputs: usize = header[0].parse()?;
-        let num_output_wires: usize = header[1].parse()?;
+        let _num_outputs: usize = header[0].parse()?;
+        let _num_output_wires: usize = header[1].parse()?;
 
         // Parse all the gates
         let mut gates = Vec::with_capacity(num_gates);
         for line in lines.take(num_gates) {
             let mut tok = line.split_ascii_whitespace();
             let in_count: usize = tok.next().unwrap().parse()?;
-            let out_count: usize = tok.next().unwrap().parse()?;
+            let _out_count: usize = tok.next().unwrap().parse()?;
 
             let inputs = (0..in_count)
                 .map(|_| tok.next().unwrap().parse().unwrap())
@@ -204,7 +204,7 @@ impl Circuit {
         for line in lines {
             let mut tok = line.split_ascii_whitespace();
             let in_count: usize = tok.next().unwrap().parse()?;
-            let out_count: usize = tok.next().unwrap().parse()?;
+            let _out_count: usize = tok.next().unwrap().parse()?;
 
             let inputs: Vec<WireId> = (0..in_count)
                 .map(|_| {

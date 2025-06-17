@@ -1,5 +1,15 @@
 [workspace]
-members = ["crates/validityproof", "crates/garble"]
+members = [
+  "crates/garble",
+  "crates/circuit-lib",
+
+  # binaries listed seperately
+  "bin/validityproof",
+  "bin/validityproof/core",
+  "bin/validityproof/methods",
+  "bin/validityproof/methods/guest",
+  "bin/circuit-utils",
+]
 resolver = "2"
 
 [workspace.package]
@@ -38,7 +48,24 @@ rustdoc.all = "warn"
 clippy.too_long_first_doc_paragraph = "warn"
 
 [workspace.dependencies]
-
+anyhow = "1.0"
+bytecheck = "0.8.1"
+bytemuck = "1.23.1"
+circuit-lib = { path = "crates/circuit-lib" }
+clap = "4.1"
+garble = { path = "crates/garble" }
+garbling-methods = { path = "bin/validityproof/methods" }
+rand = "0.9"
+rand_chacha = "0.9.0"
+# risc0-zkvm = "=2.0.2"
+risc0-zkvm = { git = "https://github.com/risc0/risc0.git", tag = "v2.0.2" }
+rkyv = "0.8.10"
+serde = "1.0"
+serde_bytes = "0.11.17"
+sha2 = "0.10.8"
+tracing-subscriber = "0.3"
+validityproof-core = { path = "bin/validityproof/core" }
+risc0-build = "2.1.0"
 
 [profile.release]
 opt-level = "z"   # Optimized for size, use 3 for speed
