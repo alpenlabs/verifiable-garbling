@@ -11,7 +11,7 @@ fn main() {
     // reconstruct u32 from the byte array
     let input_size = u32::from_le_bytes(input_size_bytes.try_into().unwrap());
 
-    // initialize byte vectors to receive serialized value from host    
+    // initialize byte vectors to receive serialized value from host
     let mut input_bytes = vec![0u8; input_size.try_into().unwrap()];
     env::read_slice(&mut input_bytes);
 
