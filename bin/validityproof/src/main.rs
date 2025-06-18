@@ -61,16 +61,17 @@ fn main() {
     let mut file = File::create("input.bin").expect("couldn't create input.bin file");
     file.write_all(&input_bytes)
         .expect("couldn't write input circuit and labels to input.bin");
-    println!("Wrote {} bytes to input.bin", input_bytes.len());
+    println!("Wrote {} bytes to input.bin to use with bento_cli", input_bytes.len());
 
     // number of bytes in serialized input
-    let input_bytes_len = input_bytes.len();
-
-    // print the size of serialized input in bytes
-    println!("Input Bytes Length: {input_bytes_len} bytes");
+    let input_bytes_len: u32 = input_bytes.len() as u32;
+    
+    // turn the u32 into le bytes
+    let input_bytes_len_bytes: [u8;4] = input_bytes_len.to_le_bytes();
 
     // initialize the env and pass the input input and labels to guest
     let env = ExecutorEnv::builder()
+        .write_slice(&input_bytes_len_bytes)
         .write_slice(&input_bytes)
         .build()
         .unwrap();

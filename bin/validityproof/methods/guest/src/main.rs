@@ -4,8 +4,15 @@ use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allo
 use validityproof_core::{ArchivedGuestInput, GuestInput, GuestOutput};
 
 fn main() {
-    // initialize byte vectors to receive serialized value from host
-    let mut input_bytes = vec![0u8; 580680];
+    // initialize a byte array of length 4 to receive the size of serialized input
+    let mut input_size_bytes = vec![0u8; 4];
+    env::read_slice(&mut input_size_bytes);
+
+    // reconstruct u32 from the byte array
+    let input_size = u32::from_le_bytes(input_size_bytes.try_into().unwrap());
+
+    // initialize byte vectors to receive serialized value from host    
+    let mut input_bytes = vec![0u8; input_size.try_into().unwrap()];
     env::read_slice(&mut input_bytes);
 
     println!("Input Bytes Length: {} bytes", input_bytes.len());
