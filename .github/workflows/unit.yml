@@ -37,10 +37,16 @@ jobs:
       #   uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
       #   with:
       #     tool: nextest
+      # - name: Install cargo-nextest
+      #   run: |
+      #     curl -Ls https://get.nexte.st/latest/linux | tar xz -C $HOME/.cargo/bin --strip-components=1
+      #     echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
       - name: Install cargo-nextest
-        run: |
-          curl -Ls https://get.nexte.st/latest/linux | tar xz -C $HOME/.cargo/bin --strip-components=1
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        uses: baptiste0928/cargo-install@v1
+        with:
+          crate: cargo-nextest
+          locked: true
 
       - name: Rust cache
         uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2
