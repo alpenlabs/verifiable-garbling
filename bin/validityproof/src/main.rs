@@ -57,17 +57,21 @@ fn main() {
     let mut arena = Arena::new();
     let input_bytes = to_bytes_with_alloc::<_, Error>(&input, arena.acquire()).unwrap();
 
-    //write input_bytes to a file input.bin to be used by bento
-    let mut file = File::create("input.bin").expect("couldn't create input.bin file");
-    file.write_all(&input_bytes)
-        .expect("couldn't write input circuit and labels to input.bin");
-    println!("Wrote {} bytes to input.bin to use with bento_cli", input_bytes.len());
-
     // number of bytes in serialized input
     let input_bytes_len: u32 = input_bytes.len() as u32;
     
     // turn the u32 into le bytes
     let input_bytes_len_bytes: [u8;4] = input_bytes_len.to_le_bytes();
+
+    //write input_bytes to a file input.bin to be used by bento
+    let mut file = File::create("elf_and_inputs/input.bin").expect("couldn't create input.bin file");
+    file.write_all(&input_bytes_len_bytes)
+        .expect("couldn't write input circuit and labels to input.bin");
+    file.write_all(&input_bytes)
+        .expect("couldn't write input circuit and labels to input.bin");
+    println!("Wrote {} bytes to input.bin to use with bento_cli", input_bytes.len());
+
+
 
     // initialize the env and pass the input input and labels to guest
     let env = ExecutorEnv::builder()

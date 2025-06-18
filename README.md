@@ -10,10 +10,10 @@
 
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
-Our garbling circuit protocol needs to maliciously secure.
+This ensures that garbling circuit protocol is secure against malicious adversaries.
 We need to ensure that the garbler is constructing the garbling table for the agreed upon boolean circuit and also ensure that the table is constructed correctly.
 
-This means that even before evaluation, anyone can ensure that the evaluation will go through and will correspond the agreed upon boolean circuit.
+This means that, even before evaluation, anyone can verify that the evaluation will succeed and correspond to the agreed-upon boolean circuit.
 
 ![FlowChart for Garbling and OT proofs](./gc_flow.png)
 
@@ -47,16 +47,18 @@ The `boolean_file` is representation of the boolean circuit in bristol fashion a
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
 ```{bash}
-RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof circuits/example1/example1.bristol seed.bin
+RUST_LOG=info RISC0_DEV_MODE=1 RISC0_INFO=1 cargo run -p validityproof circuits/example1/example1.bristol seed.bin
 ```
 
-If you only want to generate mock tests and get details of cycle counts, pass the env variable `RISC0_DEV_MODE=1`
+Due to the env variable `RISC0_DEV_MODE=1`, the above command generates mock proof but allows to get details of cycle counts and also save the serialized input to file.
+
+To generate actual proofs, set `RISC0_DEV_MODE=0`
 
 Benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
 
 ### Running in Multi GPU setups
 
-To get multi GPU proof generai, we have to ensure that the STARK proof for the segments are being distributed to the GPUs and then collected. This orchestration is handled by [bento](https://github.com/risc0/risc0/tree/main/bento).
+To get multi GPU proof generation, we have to ensure that the STARK proof for the segments are being distributed to the GPUs and then collected. This orchestration is handled by [bento](https://github.com/risc0/risc0/tree/main/bento).
 
 The steps to setup bento are:
 
@@ -148,6 +150,10 @@ The steps to setup bento are:
     you can remove -s flag to get a STARK proof instead.
     The proofs along with public parameters (together called receipt) are saved at path specified using -o flag
 
+    The ELF file can be found at `target/riscv-guest/garbling-methods/freexorgarble/riscv32im-risc0-zkvm-elf/release/freexorgarble.bin`
+
+    The input file is generated and saved to `elf_and_inputs` as `input.bin` whenever you run these without bento on CPU or GPU as explained [here](#running on CPU or Single GPU).
+
 ## Using Circuit Utils
 
 ### Generating Random Circuits
@@ -160,7 +166,7 @@ cargo run --bin circuit-utils random -i 4 -g 10  -r 0.5  --output circuits/rando
 
 `-i`: Number of input wires
 `-g`: Number of gates
-`-r` frac of xor gates amongst total number of gates
+`-r`: Fraction of XOR gates among the total number of gates.
 
 If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 
@@ -175,7 +181,8 @@ More efficient ways to handle NOT by either absorbing it into inputs of other ga
 - **The data sent from host to guest is deserialized by guest before use.**
 Rkyv supports direct access without deserialization using Archived Types. We would need to ensure garbling works with these types.
 - **Evaluation of Garbled Circuit has not been implemented**
-- **Thorough testing needs to be added**
+- **Comprehensive testing is needed**\
+Including unit tests for core components, integration tests for end-to-end workflows, and property-based tests to ensure circuit correctness and security guarantees.
 
 ## Contributing
 
@@ -188,4 +195,4 @@ For more information please see [`CONTRIBUTING.md`](/CONTRIBUTING.md).
 ## License
 
 This work is dual-licensed under MIT and Apache 2.0.
-You can choose between one of them if you use this work.
+You may choose either license if you use this work.
