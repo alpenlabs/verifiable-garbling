@@ -4,7 +4,7 @@ use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allo
 use validityproof_core::{ArchivedGuestInput, GuestInput, GuestOutput};
 
 fn main() {
-    // initiliaze byte vectors to receive serialized value from host
+    // initialize byte vectors to receive serialized value from host
     let mut input_bytes = vec![0u8; 580680];
     env::read_slice(&mut input_bytes);
 

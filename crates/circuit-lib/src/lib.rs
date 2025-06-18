@@ -264,7 +264,7 @@ impl Circuit {
         let mut rng = rng();
         let mut gates = Vec::with_capacity(num_gates);
 
-        // The number of availale wires is initially the number of input wires
+        // The number of available wires is initially the number of input wires
         let mut available: usize = num_inputs;
 
         // total number of wires is equal to sum of input wires and number of gates, assuming each gate has fan-out of 1

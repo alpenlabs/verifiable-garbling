@@ -23,7 +23,7 @@ pub fn gen_label_hash(labels: Vec<Label>) -> Vec<[u8; 32]> {
 
 /// sha256-based pad: H(ka || kb)
 // This is used to get the masking value for the output gate labels
-// if two gates might share the same inputs, we need to append the gate_id to the value being hashed to get differnt table entries.
+// if two gates might share the same inputs, we need to append the gate_id to the value being hashed to get different table entries.
 // TODO: @mukesh (optimization) For Not gates, only 1 label is enough. currently, I just duplicate the same label. this function
 // signature can be overloaded to handle both.
 fn pad_sha(ka: &Label, kb: &Label) -> Label {

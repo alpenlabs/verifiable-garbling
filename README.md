@@ -1,4 +1,4 @@
-# Garbled Ciruits and its Valdity Proofs
+# Garbled Circuits and its Validity Proofs
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache-blue.svg)](https://opensource.org/licenses/apache-2-0)
@@ -11,7 +11,7 @@
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
 Our garbling circuit protocol needs to maliciously secure.
-We need to ensure that the garbler is construting the garbling table for the agreed upon boolean circuit and also ensure that the table is constructed correctly.
+We need to ensure that the garbler is constructing the garbling table for the agreed upon boolean circuit and also ensure that the table is constructed correctly.
 
 This means that even before evaluation, anyone can ensure that the evaluation will go through and will correspond the agreed upon boolean circuit.
 
@@ -42,7 +42,7 @@ To generate the garbled table and proof that garbling was done correctly using r
 RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof <boolean_file> <seed_file>
 ```
 
-The `boolean_file` is representation of the boolen circuit in bristol fashion as detailed [here] (<https://nigelsmart.github.io/MPC-Circuits/>)
+The `boolean_file` is representation of the boolean circuit in bristol fashion as detailed [here] (<https://nigelsmart.github.io/MPC-Circuits/>)
 
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
@@ -56,12 +56,12 @@ Benchmarks and estimates of time and cost of producing proofs is at [the google 
 
 ### Running in Multi GPU setups
 
-To get multi GPU proof generai, we have to ensure that the STARK proof for the segments are being distributed to the GPUs and then collected. This orchastration is handled by [bento](https://github.com/risc0/risc0/tree/main/bento).
+To get multi GPU proof generai, we have to ensure that the STARK proof for the segments are being distributed to the GPUs and then collected. This orchestration is handled by [bento](https://github.com/risc0/risc0/tree/main/bento).
 
 The steps to setup bento are:
 
 1. (Optional) Spin up an aws instance
-    - ensure atleast 100 gb persistant storage
+    - ensure atleast 100 gb persistent storage
     - choose Ubuntu 22.04
     - use some multi gpu instance type like g6.12x
 
@@ -106,7 +106,7 @@ The steps to setup bento are:
     cargo install --git https://github.com/alpenlabs/risc0 --branch mukesh/add_bento_to_v2.0 bento-client --bin bento_cli
     ```
 
-    Note this installs `bento_cli` from a fork which is to ensure that the version of risczero expectd by bento match with risczero installed previously.
+    Note this installs `bento_cli` from a fork which is to ensure that the version of risczero expected by bento match with risczero installed previously.
 
 7. Clone the boundless repo to get the docker compose files and select branch.
 
@@ -139,7 +139,7 @@ The steps to setup bento are:
     RUST_LOG=info bento_cli -s -c 4096
     ```
 
-11. If the test was sucessful you can run generate the SNARK proof by running
+11. If the test was successful you can run generate the SNARK proof by running
 
     ```bash
     RUST_LOG=info bento_cli -f ELF_file -i input.bin -s -o path_to_output
@@ -170,8 +170,8 @@ If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 If we exceed this, we might have to chunk the boolean circuit into smaller segments.
 - **Only AND, XOR and INV (NOT) gates are supported as of now.**\
 Further gates can be added.
-- **NOT gate is handled as a seperate gate with two entries in garbled table.**\
-More efficient ways to handle NOT by either abosrbing it into inputs of other gates or emulating NOT using XOR can be done
+- **NOT gate is handled as a separate gate with two entries in garbled table.**\
+More efficient ways to handle NOT by either absorbing it into inputs of other gates or emulating NOT using XOR can be done
 - **The data sent from host to guest is deserialized by guest before use.**
 Rkyv supports direct access without deserialization using Archived Types. We would need to ensure garbling works with these types.
 - **Evaluation of Garbled Circuit has not been implemented**

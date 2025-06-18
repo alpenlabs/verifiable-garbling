@@ -76,7 +76,7 @@ pub fn gen_labels(seed: [u8; 32], input_wire_count: usize, inner_wire_count: usi
     let mut delta = [0u8; 16];
     rng.fill_bytes(&mut delta);
 
-    //genrate the input labels
+    //generate the input labels
     let mut input_labels = Vec::with_capacity(input_wire_count);
     for _ in 0..input_wire_count {
         let mut k0 = [0u8; 16];
