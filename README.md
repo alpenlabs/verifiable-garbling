@@ -42,7 +42,7 @@ To generate the garbled table and proof that garbling was done correctly using r
 RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof <boolean_file> <seed_file>
 ```
 
-The `boolean_file` is representation of the boolen circuit in bristol fashion as detailed [here] (https://nigelsmart.github.io/MPC-Circuits/)
+The `boolean_file` is representation of the boolen circuit in bristol fashion as detailed [here] (<https://nigelsmart.github.io/MPC-Circuits/>)
 
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
