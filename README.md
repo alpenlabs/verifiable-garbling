@@ -148,6 +148,22 @@ The steps to setup bento are:
     you can remove -s flag to get a STARK proof instead.
     The proofs along with public parameters (together called receipt) are saved at path specified using -o flag
 
+## Using Circuit Utils
+
+### Generating Random Circuits
+
+```bash
+cargo run --bin circuit-utils random -i 4 -g 10  -r 0.5  --output circuits/random/random_test.bristol
+```
+
+### Flags
+
+`-i`: Number of input wires
+`-g`: Number of gates
+`-r` frac of xor gates amongst total number of gates
+
+If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
+
 ## Limitations, Optimizations and TODOs
 
 - **The guest program has a memory of 3 GB**\
