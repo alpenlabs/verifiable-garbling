@@ -33,17 +33,8 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@fcf085fcb4b4b8f63f96906cd713eb52181b5ea4 # stable
 
-      # - name: Install latest cargo-nextest release
-      #   uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
-      #   with:
-      #     tool: nextest
-      # - name: Install cargo-nextest
-      #   run: |
-      #     curl -Ls https://get.nexte.st/latest/linux | tar xz -C $HOME/.cargo/bin --strip-components=1
-      #     echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
       - name: Install cargo-nextest
-        uses: baptiste0928/cargo-install@v1
+        uses: baptiste0928/cargo-install@e38323ef017552d7f7af73a3f4db467f278310ed #v3.3.1
         with:
           crate: cargo-nextest
           locked: true
