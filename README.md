@@ -54,7 +54,6 @@ Due to the env variable `RISC0_DEV_MODE=1`, the above command generates mock pro
 
 To generate actual proofs, set `RISC0_DEV_MODE=0`
 
-Benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
 
 ### Running in Multi GPU setups
 
@@ -170,10 +169,28 @@ cargo run --bin circuit-utils random -i 4 -g 10  -r 0.5  --output circuits/rando
 
 If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 
+
+## Benchmarks
+
+| Circuit            | Total Gates | AND Gates | XOR Gates | INV Gates | Cycle Counts       |
+|--------------------|------------:|----------:|----------:|----------:|-------------------:|
+| example1           |        4    |        2  |        2  |      0    |          65,536    |
+| example2           |   28,032    |    8,128  |   19,904  |      0    |      42,991,616    |
+| example3           |  344,671    |   57,947  |  286,724  |  4,946    |     367,067,136    |
+| random_1mil_gates  |1,000,000    |  100,000  |  900,000  |      0    |   1,435,500,544    |
+| random_10mil_gates |10,000,000   |  136,797  |9,863,203  |      0    |  12,047,089,664    |
+| random_20mil_gates |20,000,000   |  274,873  |19,725,127 |      0    |  24,789,385,216    |
+| random_30mil_gates |30,000,000   |  411,441  |29,588,559 |      0    |  37,706,006,528    |
+
+More detailed benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
+
 ## Limitations, Optimizations and TODOs
 
 - **The guest program has a memory of 3 GB**\
 If we exceed this, we might have to chunk the boolean circuit into smaller segments.
+
+Due to this, the largest circuit size supported is around 30 mil gates with (1:72 ratio of AND:XOR).
+
 - **Only AND, XOR and INV (NOT) gates are supported as of now.**\
 Further gates can be added.
 - **NOT gate is handled as a separate gate with two entries in garbled table.**\
