@@ -8,6 +8,11 @@
 > [!IMPORTANT]
 > This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
 
+> [!WARNING]
+> **Security Notice**: This project currently uses risc0-zkvm v2.0.2, which should be updated to the latest version v2.1.0 due to the vulnerability reported [here](https://github.com/risc0/risc0/security/advisories/GHSA-g3qg-6746-3mg9). The upgrade is pending coordination with bento_cli.
+
+
+
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
 This ensures that garbling circuit protocol is secure against malicious adversaries.
@@ -42,7 +47,7 @@ To generate the garbled table and proof that garbling was done correctly using r
 RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof <boolean_file> <seed_file>
 ```
 
-The `boolean_file` is representation of the boolean circuit in bristol fashion as detailed [here] (<https://nigelsmart.github.io/MPC-Circuits/>)
+The `boolean_file` is representation of the boolean circuit in bristol fashion as detailed [here](https://nigelsmart.github.io/MPC-Circuits/)
 
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
@@ -185,6 +190,9 @@ If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 More detailed benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
 
 ## Limitations, Optimizations and TODOs
+
+- **TODO: Upgrade risc0-zkvm from v2.0.2 to v2.1.0**\
+Update risc0-zkvm dependency to the latest secure version. This requires coordinating with dependent repositories to ensure compatibility.
 
 - **The guest program has a memory of 3 GB**\
 If we exceed this, we might have to chunk the boolean circuit into smaller segments.
