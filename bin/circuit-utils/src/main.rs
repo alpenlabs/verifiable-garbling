@@ -64,7 +64,7 @@ fn main() -> Result<()> {
             let (ins, outs) = circuit.enumerate_io();
             println!("Primary inputs : {ins:?}");
             println!("Primary outputs: {outs:?}");
-        } 
+        }
     }
 
     Ok(())
