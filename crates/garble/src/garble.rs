@@ -11,9 +11,9 @@ pub fn xor_labels(a: &Label, b: &Label) -> Label {
     r
 }
 
-pub fn gen_label_hash(labels: Vec<Label>) -> Vec<[u8; 32]> {
+pub fn gen_label_hash(labels: &[Label]) -> Vec<[u8; 32]> {
     //generate the hash for the labels corresponding to both bits of the input wires
-    let mut input_labels_hash = Vec::with_capacity(2 * labels.len());
+    let mut input_labels_hash = Vec::with_capacity(labels.len());
     for label in labels {
         let hash_zero_label: [u8; 32] = Sha256::digest(label).into();
         input_labels_hash.push(hash_zero_label);
