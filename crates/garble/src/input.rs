@@ -69,7 +69,7 @@ pub struct LabelInputs {
 
 //generate the labels
 pub fn gen_labels(seed: [u8; 32], input_wire_count: usize, inner_wire_count: usize) -> LabelInputs {
-    // The seed value is used to initialize a Chacha20 RNG which is cryptographically secure, which uses an internal 64 bit counter
+    // The seed value is used to initialize a Chacha12 RNG which is cryptographically secure, which uses an internal 64 bit counter
     let mut rng = ChaCha12Rng::from_seed(seed);
 
     //initialize delta with random value. this is the global offset required for free-xor
