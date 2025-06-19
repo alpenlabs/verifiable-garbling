@@ -25,7 +25,7 @@ fn main() {
     let input = deserialize::<GuestInput, Error>(circuit_input_archieved).unwrap();
 
     // compute hash of the input labels
-    let label_hashes = gen_label_hash(input.labels.input_labels.clone());
+    let label_hashes = gen_label_hash(&input.labels.input_labels);
 
     // compute garbled tables
     let garbled_tables = garble_ckt(input.input_circuit, input.labels);

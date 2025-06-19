@@ -121,7 +121,6 @@ fn main() {
     let _public_values: GuestOutput =
         deserialize::<GuestOutput, Error>(public_values_archieved).unwrap();
 
-
     // The receipt was verified at the end of proving, but the below code is an
     // example of how someone else could verify this receipt.
     receipt.verify(FREEXORGARBLE_ID).unwrap();
