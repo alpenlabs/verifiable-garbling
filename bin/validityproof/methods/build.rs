@@ -11,9 +11,8 @@ fn main() {
             pub const FREEXORGARBLE_ID: [u32; 8] = [0u32; 8];
         "#;
 
-    std::fs::write(methods_path, elf).expect("Failed to write mock rollup elf");
-
     if is_clippy_driver {
+         std::fs::write(methods_path, elf).expect("Failed to write mock rollup elf");
     } else {
         risc0_build::embed_methods();
     }
