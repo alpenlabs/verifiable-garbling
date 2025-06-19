@@ -70,12 +70,6 @@ pub struct Circuit {
 }
 
 impl Circuit {
-    // TODO: @mukesh (yet to implement)
-    // pub fn enumerate_io(&self) -> (Vec<GateId>, Vec<GateId>) { /* … */ }
-
-    // pub fn fan_in(&self, gate: GateId) -> usize { /* … */ }
-    // pub fn fan_out(&self, gate: GateId) -> usize { /* … */ }
-
     pub fn get_gate_count(&self) -> usize {
         self.gates.len()
     }
@@ -337,11 +331,5 @@ impl Circuit {
             writeln!(w, "{}", gate.to_bristol_string())?;
         }
         Ok(())
-    }
-
-    /// returns the io details of the circuit
-    pub fn enumerate_io(&self) -> (usize, usize) {
-        // TODO: (mukesh) Implement this!
-        (5, 6)
     }
 }

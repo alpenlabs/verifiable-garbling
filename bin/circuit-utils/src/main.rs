@@ -30,13 +30,6 @@ enum Commands {
         #[arg(short, long, value_name = "RATIO")]
         ratio_xor_to_and: f64,
     },
-
-    /// List primary input and output wires
-    Io {
-        /// Bristol-format file to analyze
-        #[arg(value_name = "FILE")]
-        file: PathBuf,
-    },
 }
 
 fn main() -> Result<()> {
@@ -58,14 +51,6 @@ fn main() -> Result<()> {
 
             println!("Wrote random circuit to {}", output.display());
         }
-
-        Commands::Io { file } => {
-            let circuit = Circuit::from_bristol_file(&file)?;
-            let (ins, outs) = circuit.enumerate_io();
-            println!("Primary inputs : {ins:?}");
-            println!("Primary outputs: {outs:?}");
-        }
     }
-
     Ok(())
 }
