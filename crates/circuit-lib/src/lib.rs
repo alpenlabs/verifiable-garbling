@@ -176,12 +176,6 @@ impl Circuit {
             .filter(|w| !used_in.contains(w))
             .collect();
 
-        // // Ensure validity of the header values
-
-        // // Constraint 1: total wire count = total gate count + input wire count
-        // assert_eq!(num_wires, num_gates + num_input_wires, "Header and Circuit mismatch!");
-        // assert_eq!(num_input_wires, inputs.len(), "Input Count mismatch");
-
         Ok(Circuit {
             num_wires,
             inputs,

@@ -37,17 +37,6 @@ enum Commands {
         #[arg(value_name = "FILE")]
         file: PathBuf,
     },
-    // /// Count all gates
-    // GateCount {
-    //     #[arg(value_name = "FILE")]
-    //     file: PathBuf,
-    // },
-
-    // /// Count all wires
-    // WireCount {
-    //     #[arg(value_name = "FILE")]
-    //     file: PathBuf,
-    // },
 }
 
 fn main() -> Result<()> {
@@ -75,15 +64,7 @@ fn main() -> Result<()> {
             let (ins, outs) = circuit.enumerate_io();
             println!("Primary inputs : {ins:?}");
             println!("Primary outputs: {outs:?}");
-        } // Commands::GateCount { file } => {
-          //     let circuit = Circuit::from_bristol_file(&file)?;
-          //     println!("Total gates: {}", circuit.gate_count());
-          // }
-
-          // Commands::WireCount { file } => {
-          //     let circuit = Circuit::from_bristol_file(&file)?;
-          //     println!("Total wires: {}", circuit.wire_count());
-          // }
+        } 
     }
 
     Ok(())
