@@ -70,7 +70,7 @@ validityproof-core = { path = "bin/validityproof/core" }
 sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
 
 [profile.release]
-opt-level = "z"   # Optimized for size, use 3 for speed
+opt-level = 3   # Optimized for speed
 lto = true        # Enable Link Time Optimization
 codegen-units = 1 # Reduced to increase optimizations
 panic = "abort"   # Abort on panic
