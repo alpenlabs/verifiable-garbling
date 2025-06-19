@@ -66,6 +66,9 @@ sha2 = "0.10.8"
 tracing-subscriber = "0.3"
 validityproof-core = { path = "bin/validityproof/core" }
 
+[patch.crates-io]
+sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
+
 [profile.release]
 opt-level = "z"   # Optimized for size, use 3 for speed
 lto = true        # Enable Link Time Optimization
