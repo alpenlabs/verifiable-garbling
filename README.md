@@ -3,7 +3,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache-blue.svg)](https://opensource.org/licenses/apache-2-0)
 [![ci](https://github.com/alpenlabs/verifiable-garbling/actions/workflows/lint.yml/badge.svg?event=push)](https://github.com/alpenlabs/verifiable-garbling/actions)
-[![docs](https://img.shields.io/badge/docs-docs.rs-orange)](https://docs.rs/rust-template)
 
 > [!IMPORTANT]
 > This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
@@ -11,14 +10,51 @@
 > [!WARNING]
 > **Security Notice**: This project currently uses risc0-zkvm v2.0.2, which should be updated to the latest version v2.1.0 due to the vulnerability reported [here](https://github.com/risc0/risc0/security/advisories/GHSA-g3qg-6746-3mg9). The upgrade is pending coordination with bento_cli.
 
-
-
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
 This ensures that garbling circuit protocol is secure against malicious adversaries.
 We need to ensure that the garbler is constructing the garbling table for the agreed upon boolean circuit and also ensure that the table is constructed correctly.
 
-This means that, even before evaluation, anyone can verify that the evaluation will succeed and correspond to the agreed-upon boolean circuit.
+This means that, even before evaluation, anyone can verify that the evaluation will succeed and correspond to the agreed-upon boolean circuit
+
+## Key Features
+
+- Free-XOR optimization for efficient XOR operations
+- RISC Zero integration for proof generation  
+- Support for Bristol Fashion circuit format
+- Scalable to circuits with 30+ million gates
+- Multi-GPU proof generation support
+
+## Quick Start
+
+### Prerequisites
+
+- Rust (latest stable version)
+- Git
+- 16GB+ RAM recommended for larger circuits
+
+### Basic Usage
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/alpenlabs/verifiable-garbling
+   cd verifiable-garbling
+   ```
+
+2. Run a simple example:
+
+   ```bash
+   RUST_LOG=info RISC0_DEV_MODE=1 cargo run -p validityproof circuits/example1/example1.bristol seed.bin
+   ```
+
+3. Expected output:
+
+   ```bash
+   INFO garbling circuit with 4 gates...
+   INFO proof generation completed
+   INFO saved to elf_and_inputs/input.bin
+   ```
 
 ![FlowChart for Garbling and OT proofs](./gc_flow.png)
 
@@ -41,9 +77,9 @@ The above diagram can be accessed by the [permalink](https://excalidraw.com/#jso
 
 ### running on CPU or Single GPU
 
-To generate the garbled table and proof that garbling was done correctly using risc0 , cd into the gc-verifiability and run
+To generate the garbled table and proof that garbling was done correctly using risc0, run:
 
-```{bash}
+```bash
 RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof <boolean_file> <seed_file>
 ```
 
@@ -51,7 +87,7 @@ The `boolean_file` is representation of the boolean circuit in bristol fashion a
 
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
-```{bash}
+```bash
 RUST_LOG=info RISC0_DEV_MODE=1 RISC0_INFO=1 cargo run -p validityproof circuits/example1/example1.bristol seed.bin
 ```
 
@@ -60,103 +96,23 @@ Due to the env variable `RISC0_DEV_MODE=1`, the above command generates mock pro
 To generate actual proofs, set `RISC0_DEV_MODE=0`
 
 
-### Running in Multi GPU setups
+### Running with Multiple GPUs
 
-To get multi GPU proof generation, we have to ensure that the STARK proof for the segments are being distributed to the GPUs and then collected. This orchestration is handled by [bento](https://github.com/risc0/risc0/tree/main/bento).
+For distributed proof generation across multiple GPUs using [Bento](https://github.com/risc0/risc0/tree/main/bento), see our detailed [Multi-GPU Setup Guide](docs/MULTI_GPU_SETUP.md).
 
-The steps to setup bento are:
+**Quick summary:**
+1. Set up AWS instance with multiple GPUs (e.g., g6.12x)
+2. Install dependencies: Docker, NVIDIA drivers, Rust, RISC Zero
+3. Install `bento_cli` from our fork to ensure version compatibility
+4. Configure Docker Compose for your GPU count
+5. Run proof generation:
+   ```bash
+   RUST_LOG=info bento_cli -f ELF_file -i input.bin -s -o output_path
+   ```
 
-1. (Optional) Spin up an aws instance
-    - ensure atleast 100 gb persistent storage
-    - choose Ubuntu 22.04
-    - use some multi gpu instance type like g6.12x
-
-2. Install build dependencies and `just`
-
-    ```bash
-    sudo apt update
-    sudo apt upgrade
-    sudo apt install build-essential
-    sudo snap install just --classic
-    ```
-
-3. Install nvtop
-
-    ```bash
-    sudo apt install nvtop
-    ```
-
-4. Install rust (Follow [official installation guide](https://www.rust-lang.org/tools/install) for more detailed instructions)
-
-    ```bash
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    ```
-
-5. Install risczero (Follow [official installation guide](https://dev.risczero.com/api/zkvm/install) for more detailed instructions)
-
-    ```bash
-    curl -L https://risczero.com/install | bash
-    ```
-
-    ```bash
-    rzup install cargo-risczero 2.0.2
-    ```
-
-    ```bash
-    rzup install rust
-    ```
-
-6. Install `bento_cli` using
-
-    ```bash
-    cargo install --git https://github.com/alpenlabs/risc0 --branch mukesh/add_bento_to_v2.0 bento-client --bin bento_cli
-    ```
-
-    Note this installs `bento_cli` from a fork which is to ensure that the version of risczero expected by bento match with risczero installed previously.
-
-7. Clone the boundless repo to get the docker compose files and select branch.
-
-    ```bash
-    git clone https://github.com/alpenlabs/boundless
-    cd boundless
-    git checkout mukesh/multiple_gpu
-
-    ```
-
-    Note: This has compose.yml configured for 4 GPUs. You can change it depending on your device by updating the compose.yml with instructions provided in the [docs](https://docs.beboundless.xyz/provers/quick-start#configuring-bento)
-
-8. Install Nvidia drivers and dockers
-
-    ```bash
-    sudo ./scripts/setup.sh
-    ```
-
-    You will need to restart after this
-
-9. spin up the docker images
-
-    ```bash
-    just bento up
-    ```
-
-10. run the test and monitor the GPU usage to confirm that all the GPUs are being utilized.
-
-    ```bash
-    RUST_LOG=info bento_cli -s -c 4096
-    ```
-
-11. If the test was successful you can run generate the SNARK proof by running
-
-    ```bash
-    RUST_LOG=info bento_cli -f ELF_file -i input.bin -s -o path_to_output
-    ```
-
-    you can remove -s flag to get a STARK proof instead.
-    The proofs along with public parameters (together called receipt) are saved at path specified using -o flag
-
-    The ELF file can be found at `target/riscv-guest/garbling-methods/freexorgarble/riscv32im-risc0-zkvm-elf/release/freexorgarble.bin`
-
-    The input file is generated and saved to `elf_and_inputs` as `input.bin` whenever you run these without bento on CPU or GPU as explained [here](#running on CPU or Single GPU).
+**File locations:**
+- ELF file: `target/riscv-guest/garbling-methods/freexorgarble/riscv32im-risc0-zkvm-elf/release/freexorgarble.bin`
+- Input file: Generated in `elf_and_inputs/input.bin` when running [CPU/Single GPU commands](#running-on-cpu-or-single-gpu)
 
 ## Using Circuit Utils
 
@@ -188,6 +144,27 @@ If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 | random_30mil_gates |30,000,000   |  411,441  |29,588,559 |      0    |  37,706,006,528    |
 
 More detailed benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
+
+## Troubleshooting
+
+### Common Issues
+
+**"No such file or directory" when running examples:**
+
+- Ensure you're in the project root directory
+- Check that the circuit file exists.
+- Check that the seed file exists.
+
+**GPU setup issues:**
+
+- Verify NVIDIA drivers: `nvidia-smi`
+- Check Docker is running: `docker ps`
+- Ensure all GPUs are visible: `nvtop`
+
+**Proof generation fails:**
+
+- Try with `RISC0_DEV_MODE=1` first to test without actual proof generation
+- Check available disk space (proofs can be large)
 
 ## Limitations, Optimizations and TODOs
 
