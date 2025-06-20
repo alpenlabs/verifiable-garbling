@@ -47,41 +47,46 @@ fn main() {
     // compute the delta, input labels and inner label (output of gates other than XOR) using seed
     let labels = gen_labels(seed, input_wire_count, inner_wire_count);
 
-    // create a struct to store the input circuit and labels
-    let input = validityproof_core::GuestInput {
-        input_circuit: input_ckt,
-        labels,
-    };
-
-    // serialize inputs to the guest using rkyv
+    // serialize circuit and labels separately using rkyv
     let mut arena = Arena::new();
-    let input_bytes = to_bytes_with_alloc::<_, Error>(&input, arena.acquire()).unwrap();
+    let circuit_bytes = to_bytes_with_alloc::<_, Error>(&input_ckt, arena.acquire()).unwrap();
+    let labels_bytes = to_bytes_with_alloc::<_, Error>(&labels, arena.acquire()).unwrap();
 
-    // number of bytes in serialized input
-    let input_bytes_len: u32 = input_bytes.len() as u32;
+    // prepare sizes
+    let circuit_size = circuit_bytes.len() as u32;
+    let labels_size = labels_bytes.len() as u32;
+    let circuit_size_bytes = circuit_size.to_le_bytes();
+    let labels_size_bytes = labels_size.to_le_bytes();
 
-    // turn the u32 into le bytes
-    let input_bytes_len_bytes: [u8; 4] = input_bytes_len.to_le_bytes();
-
-    //write input_bytes to a file input.bin to be used by bento
+    //write data to a file input.bin to be used by bento
     {
         let mut file =
             File::create("elf_and_inputs/input.bin").expect("couldn't create input.bin file");
-        file.write_all(&input_bytes_len_bytes)
-            .expect("couldn't write input circuit and labels size to input.bin");
-        file.write_all(&input_bytes)
-            .expect("couldn't write input circuit and labels to input.bin");
+        file.write_all(&circuit_size_bytes)
+            .expect("couldn't write circuit size to input.bin");
+        file.write_all(&circuit_bytes)
+            .expect("couldn't write circuit to input.bin");
+        file.write_all(&labels_size_bytes)
+            .expect("couldn't write labels size to input.bin");
+        file.write_all(&labels_bytes)
+            .expect("couldn't write labels to input.bin");
         file.flush().expect("couldn't flush input.bin file");
     }
+    let total_bytes = circuit_size_bytes.len()
+        + circuit_bytes.len()
+        + labels_size_bytes.len()
+        + labels_bytes.len();
     println!(
         "Wrote {} bytes to input.bin to use with bento_cli",
-        input_bytes.len()
+        total_bytes
     );
 
-    // initialize the env and pass the input input and labels to guest
+    // initialize the env and pass circuit and labels to guest
     let env = ExecutorEnv::builder()
-        .write_slice(&input_bytes_len_bytes)
-        .write_slice(&input_bytes)
+        .write_slice(&circuit_size_bytes)
+        .write_slice(&circuit_bytes)
+        .write_slice(&labels_size_bytes)
+        .write_slice(&labels_bytes)
         .build()
         .unwrap();
 
@@ -106,7 +111,7 @@ fn main() {
         xor_gate_count,
         input_wire_count,
         inner_wire_count,
-        input_bytes_len as f64 / (1024.0 * 1024.0),
+        total_bytes as f64 / (1024.0 * 1024.0),
         prove_info.stats.total_cycles,
     );
     {
