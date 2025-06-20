@@ -2,13 +2,37 @@ use crate::input::{Circuit, GateDef, Label, LabelInputs, WireLabels};
 use crate::output::{AndGateTable, GarbledTables, NotGateTable};
 use sha2::{Digest, Sha256};
 
-// this xors the 128 bit labels
+// this xors the 128 bit labels using u32 operations optimized for RISC0's 32-bit emulation
 pub fn xor_labels(a: &Label, b: &Label) -> Label {
-    let mut r = [0u8; 16];
-    for i in 0..16 {
-        r[i] = a[i] ^ b[i];
-    }
-    r
+    // Cast 16-byte arrays to 4 u32 values for efficient XOR on 32-bit RISC-V
+    let a_u32 = [
+        u32::from_ne_bytes([a[0], a[1], a[2], a[3]]),
+        u32::from_ne_bytes([a[4], a[5], a[6], a[7]]),
+        u32::from_ne_bytes([a[8], a[9], a[10], a[11]]),
+        u32::from_ne_bytes([a[12], a[13], a[14], a[15]]),
+    ];
+    let b_u32 = [
+        u32::from_ne_bytes([b[0], b[1], b[2], b[3]]),
+        u32::from_ne_bytes([b[4], b[5], b[6], b[7]]),
+        u32::from_ne_bytes([b[8], b[9], b[10], b[11]]),
+        u32::from_ne_bytes([b[12], b[13], b[14], b[15]]),
+    ];
+    
+    // Perform 4 32-bit XOR operations instead of 16 8-bit operations
+    let result_u32 = [
+        a_u32[0] ^ b_u32[0],
+        a_u32[1] ^ b_u32[1], 
+        a_u32[2] ^ b_u32[2],
+        a_u32[3] ^ b_u32[3],
+    ];
+    
+    // Convert back to byte array
+    let mut result = [0u8; 16];
+    result[0..4].copy_from_slice(&result_u32[0].to_ne_bytes());
+    result[4..8].copy_from_slice(&result_u32[1].to_ne_bytes());
+    result[8..12].copy_from_slice(&result_u32[2].to_ne_bytes());
+    result[12..16].copy_from_slice(&result_u32[3].to_ne_bytes());
+    result
 }
 
 pub fn gen_label_hash(labels: &[Label]) -> Vec<[u8; 32]> {
