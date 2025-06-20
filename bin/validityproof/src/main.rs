@@ -72,7 +72,7 @@ fn main() {
         file.write_all(&input_bytes)
             .expect("couldn't write input circuit and labels to input.bin");
         file.flush().expect("couldn't flush input.bin file");
-    } 
+    }
     println!(
         "Wrote {} bytes to input.bin to use with bento_cli",
         input_bytes.len()
@@ -114,7 +114,7 @@ fn main() {
         file.write_all(details.as_bytes())
             .expect("Failed to write to log file");
         file.flush().expect("Failed to flush log file");
-    } 
+    }
 
     // TODO: (mukesh) Implement code for saving receipt to file and performing validation
     let public_values_bytes = receipt.clone().journal.bytes;

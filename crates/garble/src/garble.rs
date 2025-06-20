@@ -17,15 +17,15 @@ pub fn xor_labels(a: &Label, b: &Label) -> Label {
         u32::from_ne_bytes([b[8], b[9], b[10], b[11]]),
         u32::from_ne_bytes([b[12], b[13], b[14], b[15]]),
     ];
-    
+
     // Perform 4 32-bit XOR operations instead of 16 8-bit operations
     let result_u32 = [
         a_u32[0] ^ b_u32[0],
-        a_u32[1] ^ b_u32[1], 
+        a_u32[1] ^ b_u32[1],
         a_u32[2] ^ b_u32[2],
         a_u32[3] ^ b_u32[3],
     ];
-    
+
     // Convert back to byte array
     let mut result = [0u8; 16];
     result[0..4].copy_from_slice(&result_u32[0].to_ne_bytes());
