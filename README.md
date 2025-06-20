@@ -7,8 +7,6 @@
 > [!IMPORTANT]
 > This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
 
-> [!WARNING]
-> **Security Notice**: CPU/Single GPU proving now uses risc0-zkvm v2.1.0. However, multi-GPU proving via bento_cli still uses v2.0.2 due to the vulnerability reported [here](https://github.com/risc0/risc0/security/advisories/GHSA-g3qg-6746-3mg9). The bento_cli upgrade is pending.
 
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
@@ -168,8 +166,6 @@ More detailed benchmarks and estimates of time and cost of producing proofs is a
 
 ## Limitations, Optimizations and TODOs
 
-- **TODO: Upgrade bento_cli to use risc0-zkvm v2.1.0**\
-Update bento_cli dependency to use the latest secure risc0-zkvm version. CPU/Single GPU proving already uses v2.1.0, but multi-GPU proving via bento_cli still uses the vulnerable v2.0.2.
 
 - **The guest program has a memory of 3 GB**\
 If we exceed this, we might have to chunk the boolean circuit into smaller segments.
