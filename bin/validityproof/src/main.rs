@@ -64,12 +64,15 @@ fn main() {
     let input_bytes_len_bytes: [u8; 4] = input_bytes_len.to_le_bytes();
 
     //write input_bytes to a file input.bin to be used by bento
-    let mut file =
-        File::create("elf_and_inputs/input.bin").expect("couldn't create input.bin file");
-    file.write_all(&input_bytes_len_bytes)
-        .expect("couldn't write input circuit and labels to input.bin");
-    file.write_all(&input_bytes)
-        .expect("couldn't write input circuit and labels to input.bin");
+    {
+        let mut file =
+            File::create("elf_and_inputs/input.bin").expect("couldn't create input.bin file");
+        file.write_all(&input_bytes_len_bytes)
+            .expect("couldn't write input circuit and labels size to input.bin");
+        file.write_all(&input_bytes)
+            .expect("couldn't write input circuit and labels to input.bin");
+        file.flush().expect("couldn't flush input.bin file");
+    } 
     println!(
         "Wrote {} bytes to input.bin to use with bento_cli",
         input_bytes.len()
@@ -106,9 +109,12 @@ fn main() {
         input_bytes_len as f64 / (1024.0 * 1024.0),
         prove_info.stats.total_cycles,
     );
-    let mut file = File::create(&log_path).expect("Failed to create log file");
-    file.write_all(details.as_bytes())
-        .expect("Failed to write to log file");
+    {
+        let mut file = File::create(&log_path).expect("Failed to create log file");
+        file.write_all(details.as_bytes())
+            .expect("Failed to write to log file");
+        file.flush().expect("Failed to flush log file");
+    } 
 
     // TODO: (mukesh) Implement code for saving receipt to file and performing validation
     let public_values_bytes = receipt.clone().journal.bytes;
