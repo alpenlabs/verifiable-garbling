@@ -7,7 +7,6 @@
 > [!IMPORTANT]
 > This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
 
-
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
 This ensures that garbling circuit protocol is secure against malicious adversaries.
@@ -54,9 +53,9 @@ This means that, even before evaluation, anyone can verify that the evaluation w
    INFO saved to elf_and_inputs/input.bin
    ```
 
-![FlowChart for Garbling and OT proofs](./gc_flow.png)
+![FlowChart for Garbling and OT proofs](./docs/gc_flow.png)
 
-The above diagram can be accessed by the [permalink](https://excalidraw.com/#json=am-3JTklHgd7PQt2yk6Rd,WMfQXMzK2kjoWY0FMF0lpA) or excalidraw file `gc_flow.excalidraw`
+The above diagram can be accessed by the [permalink](https://excalidraw.com/#json=am-3JTklHgd7PQt2yk6Rd,WMfQXMzK2kjoWY0FMF0lpA) or excalidraw file `docs/gc_flow.excalidraw`
 
 ## Crates and Directories
 
@@ -81,7 +80,7 @@ To generate the garbled table and proof that garbling was done correctly using r
 RUST_LOG=info RISC0_INFO=1 cargo run -p validityproof <boolean_file> <seed_file>
 ```
 
-The `boolean_file` is representation of the boolean circuit in bristol fashion as detailed [here](https://nigelsmart.github.io/MPC-Circuits/)
+The `boolean_file` is representation of the boolean circuit in bristol fashion as detailed [by Prof. Nigel](https://nigelsmart.github.io/MPC-Circuits/)
 
 The `seed_file` is a 32 byte values used to initialize the CS-RNG to generate the labels.
 
@@ -93,22 +92,24 @@ Due to the env variable `RISC0_DEV_MODE=1`, the above command generates mock pro
 
 To generate actual proofs, set `RISC0_DEV_MODE=0`
 
-
 ### Running with Multiple GPUs
 
 For distributed proof generation across multiple GPUs using [Bento](https://github.com/risc0/risc0/tree/main/bento), see our detailed [Multi-GPU Setup Guide](docs/MULTI_GPU_SETUP.md).
 
 **Quick summary:**
+
 1. Set up AWS instance with multiple GPUs (e.g., g6.12x)
 2. Install dependencies: Docker, NVIDIA drivers, Rust, RISC Zero
 3. Install `bento_cli` from our fork to ensure version compatibility
 4. Configure Docker Compose for your GPU count
 5. Run proof generation:
+
    ```bash
    RUST_LOG=info bento_cli -f ELF_file -i input.bin -s -o output_path
    ```
 
 **File locations:**
+
 - ELF file: `target/riscv-guest/garbling-methods/freexorgarble/riscv32im-risc0-zkvm-elf/release/freexorgarble.bin`
 - Input file: Generated in `elf_and_inputs/input.bin` when running [CPU/Single GPU commands](#running-on-cpu-or-single-gpu)
 
@@ -127,7 +128,6 @@ cargo run --bin circuit-utils random -i 4 -g 10  -r 0.5  --output circuits/rando
 `-r`: Fraction of XOR gates among the total number of gates.
 
 If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
-
 
 ## Benchmarks
 
@@ -165,7 +165,6 @@ More detailed benchmarks and estimates of time and cost of producing proofs is a
 - Check available disk space (proofs can be large)
 
 ## Limitations, Optimizations and TODOs
-
 
 - **The guest program has a memory of 3 GB**\
 If we exceed this, we might have to chunk the boolean circuit into smaller segments.
