@@ -76,10 +76,7 @@ fn main() {
         + circuit_bytes.len()
         + labels_size_bytes.len()
         + labels_bytes.len();
-    println!(
-        "Wrote {} bytes to input.bin to use with bento_cli",
-        total_bytes
-    );
+    println!("Wrote {total_bytes} bytes to input.bin to use with bento_cli",);
 
     // initialize the env and pass circuit and labels to guest
     let env = ExecutorEnv::builder()
