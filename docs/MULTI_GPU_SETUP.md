@@ -56,7 +56,7 @@ rzup install rust
 ### 6. Install `bento_cli`
 
 ```bash
-cargo install --git https://github.com/alpenlabs/risc0 --branch mukesh/add_bento_to_v2.0 bento-client --bin bento_cli
+cargo install --git https://github.com/alpenlabs/risc0 --branch mukesh/add_bento_to_v2.1 bento-client --bin bento_cli
 ```
 
 **Note**: This installs `bento_cli` from a fork to ensure that the version of RISC Zero expected by Bento matches with RISC Zero installed previously.
