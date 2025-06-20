@@ -46,7 +46,7 @@ curl -L https://risczero.com/install | bash
 ```
 
 ```bash
-rzup install cargo-risczero 2.0.2
+rzup install cargo-risczero 2.1.0
 ```
 
 ```bash
