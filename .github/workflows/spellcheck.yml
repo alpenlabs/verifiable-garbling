@@ -1,0 +1,36 @@
+# Check pull requests for typos.
+#
+# Configuration: .github/_typos.toml
+#
+# Info:          https://github.com/marketplace/actions/typos-action
+# Local install: brew install typos-cli
+# Local install: conda install typos
+# Local run:     typos -c .github/_typos.toml
+
+name: Spell Check
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  run:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+
+      - name: Use custom config file
+        uses: crate-ci/typos@b1ae8d918b6e85bd611117d3d9a3be4f903ee5e4 #v1.33.1
+        with:
+          config: .github/_typos.toml
+          write_changes: false

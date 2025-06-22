@@ -1,0 +1,14 @@
+[package]
+name = "garble"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow.workspace = true
+bytecheck.workspace = true
+rand.workspace = true
+rand_chacha.workspace = true
+rkyv.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_bytes.workspace = true
+sha2.workspace = true

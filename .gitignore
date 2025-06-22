@@ -91,3 +91,6 @@ coverage.xml
 
 # backup files
 *.bak
+
+# the circuit files can be too large and it is better to generate it locally
+circuits/random/*

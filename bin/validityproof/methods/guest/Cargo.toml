@@ -1,0 +1,13 @@
+[package]
+name = "freexorgarble"
+version = "0.12.0"
+edition = "2021"
+
+[dependencies]
+garble.workspace = true
+risc0-zkvm = { git = "https://github.com/risc0/risc0.git", tag = "v2.0.2", default-features = false, features = [
+  "std",
+  "heap-embedded-alloc",
+] }
+rkyv.workspace = true
+validityproof-core.workspace = true

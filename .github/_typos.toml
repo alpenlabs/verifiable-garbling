@@ -1,0 +1,8 @@
+[default.extend-words]
+ba = "ba"
+ab = "ab"
+OT = "OT"
+
+[type.excalidraw]
+extend-glob = ["*.excalidraw"]
+check-file = false
