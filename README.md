@@ -131,15 +131,18 @@ If `-r` is set to 0.9 then 90% of the total number of gates are XOR.
 
 ## Benchmarks
 
-| Circuit            | Total Gates | AND Gates | XOR Gates | INV Gates | Cycle Counts       |
-|--------------------|------------:|----------:|----------:|----------:|-------------------:|
-| example1           |        4    |        2  |        2  |      0    |          65,536    |
-| example2           |   28,032    |    8,128  |   19,904  |      0    |      42,991,616    |
-| example3           |  344,671    |   57,947  |  286,724  |  4,946    |     367,067,136    |
-| random_1mil_gates  |1,000,000    |  100,000  |  900,000  |      0    |   1,435,500,544    |
-| random_10mil_gates |10,000,000   |  136,797  |9,863,203  |      0    |  12,047,089,664    |
-| random_20mil_gates |20,000,000   |  274,873  |19,725,127 |      0    |  24,789,385,216    |
-| random_30mil_gates |30,000,000   |  411,441  |29,588,559 |      0    |  37,706,006,528    |
+| Circuit              | Total Gates | AND Gates | XOR Gates | INV Gates | Input Wire Count | Cycle Count     |
+|----------------------|-------------|-----------|-----------|-----------|------------------|-----------------|
+| example1             | 4           | 2         | 2         | 0         | 2                | 65,536          |
+| example2             | 28,032      | 8,128     | 19,904    | 0         | 128              | 40,894,464      |
+| example3             | 344,671     | 57,947    | 286,724   | 4,946     | 1,536            | 360,185,856     |
+| random_1mil_gates    | 1,000,000   | 13,607    | 986,393   | 0         | 1,600            | 1,057,488,896   |
+| random_10mil_gates   | 10,000,000  | 136,797   | 9,863,203 | 0         | 1,600            | 12,282,494,976  |
+| random_25mil_gates   | 25,000,000  | 342,303   | 24,657,697| 0         | 2,000            | 31,788,630,016  |
+| random_30mil_gates   | 30,000,000  | 411,441   | 29,588,559| 0         | 2,000            | 38,370,017,280  |
+| random_35mil_gates   | 35,000,000  | 479,525   | 34,520,475| 0         | 2,000            | 45,043,679,232  |
+| random_40mil_gates   | 40,000,000  | 548,350   | 39,451,650| 0         | 2,000            | 51,768,197,120  |
+| random_45mil_gates   | 45,000,000  | 615,436   | 44,384,564| 0         | 2,000            | 58,433,011,712  |
 
 More detailed benchmarks and estimates of time and cost of producing proofs is at [the google sheets](https://docs.google.com/spreadsheets/d/1eevdDvaPIOrKF8rlpQFpkSJ2ttlDV_-BcC1MkK_ywR4/edit?gid=855613280#gid=855613280).
 
