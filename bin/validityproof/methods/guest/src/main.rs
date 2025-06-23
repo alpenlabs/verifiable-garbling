@@ -7,11 +7,12 @@ use validityproof_core::GuestOutput;
 
 fn main() {
     // Read circuit size and circuit bytes
+    // Limited to u32 since guest memory is only 3GB, u32::MAX (4GB) is sufficient
     let mut circuit_size_bytes = vec![0u8; 4];
     env::read_slice(&mut circuit_size_bytes);
     let circuit_size = u32::from_le_bytes(circuit_size_bytes.try_into().unwrap());
 
-    let mut circuit_bytes = vec![0u8; circuit_size.try_into().unwrap()];
+    let mut circuit_bytes = vec![0u8; circuit_size as usize];
     env::read_slice(&mut circuit_bytes);
 
     // Hash the circuit bytes BEFORE deserializing to save memory
@@ -24,7 +25,7 @@ fn main() {
     env::read_slice(&mut labels_size_bytes);
     let labels_size = u32::from_le_bytes(labels_size_bytes.try_into().unwrap());
 
-    let mut labels_bytes = vec![0u8; labels_size.try_into().unwrap()];
+    let mut labels_bytes = vec![0u8; labels_size as usize];
     env::read_slice(&mut labels_bytes);
 
     println!("Circuit Bytes Length: {} bytes", circuit_bytes.len());

@@ -55,7 +55,7 @@ This means that, even before evaluation, anyone can verify that the evaluation w
 
 ![FlowChart for Garbling and OT proofs](./docs/gc_flow.png)
 
-The above diagram can be accessed by the [permalink](https://excalidraw.com/#json=am-3JTklHgd7PQt2yk6Rd,WMfQXMzK2kjoWY0FMF0lpA) or excalidraw file `docs/gc_flow.excalidraw`
+The above diagram can be accessed by the [permalink](https://excalidraw.com/#json=wrOMIuR9dc1vi-WfwEDCI,maalI46yEPym8GdsCwwpoA) or excalidraw file `docs/gc_flow.excalidraw`
 
 ## Crates and Directories
 
@@ -167,10 +167,10 @@ More detailed benchmarks and estimates of time and cost of producing proofs is a
 ## Limitations, Optimizations and TODOs
 
 - **The guest program has a memory of 3 GB**\
-If we exceed this, we might have to chunk the boolean circuit into smaller segments.
-
-Due to this, the largest circuit size supported is around 30 mil gates with (1:72 ratio of AND:XOR).
-
+The current largest circuit size is 45 million gates with 1:72 ratio of AND to XOR gates.
+The bottleneck is due to way garbling currently manages space. This can be improved by:
+  - Freeing gates once they are processed.
+  - Not allocating space for all wire labels at once in the begining but doing it as is needed and dropping inner wire labels that are never fed into another gate again.
 - **Only AND, XOR and INV (NOT) gates are supported as of now.**\
 Further gates can be added.
 - **NOT gate is handled as a separate gate with two entries in garbled table.**\
@@ -180,8 +180,6 @@ Rkyv supports direct access without deserialization using Archived Types. We wou
 - **Evaluation of Garbled Circuit has not been implemented**
 - **Comprehensive testing is needed**\
 Including unit tests for core components, integration tests for end-to-end workflows, and property-based tests to ensure circuit correctness and security guarantees.
-- **Update documentation images/diagrams to reflect circuit hash changes**\
-The flow chart diagram (docs/gc_flow.png) and related documentation need to be updated to reflect the recent refactoring from using serialized circuit data to circuit hash for improved memory efficiency.
 
 ## Contributing
 

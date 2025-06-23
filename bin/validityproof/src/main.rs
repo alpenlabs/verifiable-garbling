@@ -52,9 +52,12 @@ fn main() {
     let circuit_bytes = to_bytes_with_alloc::<_, Error>(&input_ckt, arena.acquire()).unwrap();
     let labels_bytes = to_bytes_with_alloc::<_, Error>(&labels, arena.acquire()).unwrap();
 
-    // calculate sizes
-    let circuit_bytes_len: u32 = circuit_bytes.len() as u32;
-    let labels_bytes_len: u32 = labels_bytes.len() as u32;
+    // calculate sizes - limited to u32 since guest memory is only 3GB
+    // u32::MAX (4GB) provides sufficient headroom for any practical circuit
+    let circuit_bytes_len: u32 = circuit_bytes.len().try_into()
+        .expect("Circuit bytes length exceeds u32::MAX");
+    let labels_bytes_len: u32 = labels_bytes.len().try_into()
+        .expect("Labels bytes length exceeds u32::MAX");
 
     // turn the u32s into le bytes
     let circuit_bytes_len_bytes: [u8; 4] = circuit_bytes_len.to_le_bytes();
