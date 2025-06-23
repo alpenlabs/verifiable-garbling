@@ -152,7 +152,6 @@ pub fn garble_ckt(ckt_inputs: Circuit, label_inputs: LabelInputs) -> GarbledTabl
                     let out_bit = 1 - a;
                     let kout = if out_bit == 0 { k0_out } else { k1_out };
                     let p = pad_sha(&ka, &ka); // unary, duplicate
-                                               // let p = pad_poseidon(&ka, &ka);
                     let ct = xor_labels(&p, &kout);
                     table[i] = ct;
                 }
@@ -181,8 +180,8 @@ mod tests {
     use crate::input::GateDef;
     use crate::input::LabelInputs;
 
-    use super::xor_labels;
     use super::Label;
+    use super::xor_labels;
 
     #[test]
     fn xor_zero_zero_is_zero() {

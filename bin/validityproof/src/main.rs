@@ -1,6 +1,6 @@
 use garble::input::{gen_labels, load_seed, read_input_ckt};
 use garbling_methods::{FREEXORGARBLE_ELF, FREEXORGARBLE_ID};
-use risc0_zkvm::{default_prover, ExecutorEnv};
+use risc0_zkvm::{ExecutorEnv, default_prover};
 use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allocator::Arena};
 use std::env;
 use std::fs::File;
