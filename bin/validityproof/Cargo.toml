@@ -1,7 +1,14 @@
 [package]
 name = "validityproof"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Zero-knowledge proof generator for verifiable garbled circuits using RISC Zero"
+license.workspace = true
+repository.workspace = true
+keywords = ["zero-knowledge", "risc0", "garbled-circuits", "zk-proof"]
+categories = ["cryptography", "command-line-utilities"]
+readme = "../../README.md"
 
 [dependencies]
 bytecheck.workspace = true

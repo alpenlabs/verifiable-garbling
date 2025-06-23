@@ -1,6 +1,6 @@
 use garble::input::{gen_labels, load_seed, read_input_ckt};
 use garbling_methods::{FREEXORGARBLE_ELF, FREEXORGARBLE_ID};
-use risc0_zkvm::{default_prover, ExecutorEnv};
+use risc0_zkvm::{ExecutorEnv, default_prover};
 use rkyv::{api::high::to_bytes_with_alloc, deserialize, rancor::Error, ser::allocator::Arena};
 use std::env;
 use std::fs::File;
@@ -52,37 +52,46 @@ fn main() {
     let circuit_bytes = to_bytes_with_alloc::<_, Error>(&input_ckt, arena.acquire()).unwrap();
     let labels_bytes = to_bytes_with_alloc::<_, Error>(&labels, arena.acquire()).unwrap();
 
-    // prepare sizes
-    let circuit_size = circuit_bytes.len() as u32;
-    let labels_size = labels_bytes.len() as u32;
-    let circuit_size_bytes = circuit_size.to_le_bytes();
-    let labels_size_bytes = labels_size.to_le_bytes();
+    // calculate sizes - limited to u32 since guest memory is only 3GB
+    // u32::MAX (4GB) provides sufficient headroom
+    let circuit_bytes_len: u32 = circuit_bytes
+        .len()
+        .try_into()
+        .expect("Circuit bytes length exceeds u32::MAX");
+    let labels_bytes_len: u32 = labels_bytes
+        .len()
+        .try_into()
+        .expect("Labels bytes length exceeds u32::MAX");
 
-    //write data to a file input.bin to be used by bento
+    // turn the u32s into le bytes
+    let circuit_bytes_len_bytes: [u8; 4] = circuit_bytes_len.to_le_bytes();
+    let labels_bytes_len_bytes: [u8; 4] = labels_bytes_len.to_le_bytes();
+
+    //write circuit and labels separately to a file input.bin to be used by bento
     {
         let mut file =
             File::create("elf_and_inputs/input.bin").expect("couldn't create input.bin file");
-        file.write_all(&circuit_size_bytes)
+        file.write_all(&circuit_bytes_len_bytes)
             .expect("couldn't write circuit size to input.bin");
         file.write_all(&circuit_bytes)
             .expect("couldn't write circuit to input.bin");
-        file.write_all(&labels_size_bytes)
+        file.write_all(&labels_bytes_len_bytes)
             .expect("couldn't write labels size to input.bin");
         file.write_all(&labels_bytes)
             .expect("couldn't write labels to input.bin");
         file.flush().expect("couldn't flush input.bin file");
     }
-    let total_bytes = circuit_size_bytes.len()
-        + circuit_bytes.len()
-        + labels_size_bytes.len()
-        + labels_bytes.len();
-    println!("Wrote {total_bytes} bytes to input.bin to use with bento_cli",);
+    println!(
+        "Wrote {} bytes (circuit) + {} bytes (labels) to input.bin to use with bento_cli",
+        circuit_bytes.len(),
+        labels_bytes.len()
+    );
 
-    // initialize the env and pass circuit and labels to guest
+    // initialize the env and pass the circuit and labels separately to guest
     let env = ExecutorEnv::builder()
-        .write_slice(&circuit_size_bytes)
+        .write_slice(&circuit_bytes_len_bytes)
         .write_slice(&circuit_bytes)
-        .write_slice(&labels_size_bytes)
+        .write_slice(&labels_bytes_len_bytes)
         .write_slice(&labels_bytes)
         .build()
         .unwrap();
@@ -102,13 +111,15 @@ fn main() {
         format!("logs/circuit_{gate_count}gates_{and_gate_count}and_{xor_gate_count}xor.txt");
 
     let details = format!(
-        "Circuit: {} gates, {} AND gates, {} XOR gates\nInput Wire Count: {}\nInner Wire Count: {}\nInput Bytes Length: {:.2} MB\nCycles: {}\n",
+        "Circuit: {} gates, {} AND gates, {} XOR gates\nInput Wire Count: {}\nInner Wire Count: {}\nCircuit Bytes Length: {:.2} MB\nLabels Bytes Length: {:.2} MB\nTotal Input Bytes Length: {:.2} MB\nCycles: {}\n",
         gate_count,
         and_gate_count,
         xor_gate_count,
         input_wire_count,
         inner_wire_count,
-        total_bytes as f64 / (1024.0 * 1024.0),
+        circuit_bytes_len as f64 / (1024.0 * 1024.0),
+        labels_bytes_len as f64 / (1024.0 * 1024.0),
+        (circuit_bytes_len + labels_bytes_len) as f64 / (1024.0 * 1024.0),
         prove_info.stats.total_cycles,
     );
     {

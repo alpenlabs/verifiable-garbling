@@ -1,7 +1,14 @@
 [package]
 name = "validityproof-core"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Core types and structures for garbled circuit validity proofs"
+license.workspace = true
+repository.workspace = true
+keywords = ["zero-knowledge", "validity-proof", "garbled-circuits", "risc0"]
+categories = ["cryptography"]
+readme = "../../../README.md"
 
 [dependencies]
 garble.workspace = true

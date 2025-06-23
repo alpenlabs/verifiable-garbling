@@ -1,7 +1,14 @@
 [package]
 name = "garbling-methods"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "RISC Zero guest methods for garbled circuit validity proofs"
+license.workspace = true
+repository.workspace = true
+keywords = ["risc0", "guest-methods", "zero-knowledge", "garbled-circuits"]
+categories = ["cryptography"]
+readme = "../../../README.md"
 
 [build-dependencies]
 risc0-build.workspace = true

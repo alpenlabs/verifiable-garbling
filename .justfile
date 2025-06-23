@@ -51,3 +51,11 @@ audit:
 # Check GitHub Actions security analysis with `zizmor`
 check-github-actions-security:
   zizmor .
+
+# Check spellings with `typos`
+spell-check:
+  typos . --config .github/_typos.toml`
+
+# Fix spellings with `typos`
+spell-fix:
+  typos . --write-changes --config .github/_typos.toml 
