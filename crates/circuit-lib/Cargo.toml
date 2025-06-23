@@ -1,7 +1,14 @@
 [package]
 name = "circuit-lib"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Boolean circuit utilities and Bristol Fashion format parser"
+license.workspace = true
+repository.workspace = true
+keywords = ["boolean-circuits", "bristol-fashion", "cryptography", "circuit-parser"]
+categories = ["cryptography", "parser-implementations"]
+readme = "../../README.md"
 
 [dependencies]
 anyhow.workspace = true

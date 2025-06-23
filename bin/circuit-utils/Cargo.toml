@@ -1,7 +1,14 @@
 [package]
 name = "circuit-utils"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Command-line utilities for generating and manipulating boolean circuits"
+license.workspace = true
+repository.workspace = true
+keywords = ["circuit-generator", "bristol-fashion", "random-circuits", "cli-tool"]
+categories = ["command-line-utilities", "cryptography"]
+readme = "../../README.md"
 
 [dependencies]
 anyhow.workspace = true

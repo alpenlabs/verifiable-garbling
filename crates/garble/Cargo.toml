@@ -1,7 +1,14 @@
 [package]
 name = "garble"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Core garbled circuits implementation with free-XOR optimization"
+license.workspace = true
+repository.workspace = true
+keywords = ["garbled-circuits", "cryptography", "mpc", "secure-computation"]
+categories = ["cryptography"]
+readme = "../../README.md"
 
 [dependencies]
 anyhow.workspace = true

@@ -641,7 +641,7 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 
 [[package]]
 name = "circuit-lib"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "rand 0.9.1",
@@ -649,7 +649,7 @@ dependencies = [
 
 [[package]]
 name = "circuit-utils"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "circuit-lib",
@@ -1402,7 +1402,7 @@ dependencies = [
 
 [[package]]
 name = "garble"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "bytecheck",
@@ -1416,7 +1416,7 @@ dependencies = [
 
 [[package]]
 name = "garbling-methods"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "risc0-build",
 ]
@@ -4199,7 +4199,7 @@ dependencies = [
 
 [[package]]
 name = "validityproof"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "bytecheck",
  "bytemuck",
@@ -4213,7 +4213,7 @@ dependencies = [
 
 [[package]]
 name = "validityproof-core"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "garble",
  "rkyv",
