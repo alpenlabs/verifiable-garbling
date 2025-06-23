@@ -94,3 +94,10 @@ coverage.xml
 
 # the circuit files can be too large and it is better to generate it locally
 circuits/random/*
+
+#exclude the profiles generated
+*.pb
+
+# memory limit testing script
+find_memory_limit.sh
+logs/memory_limit_test_*.log

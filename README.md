@@ -180,6 +180,8 @@ Rkyv supports direct access without deserialization using Archived Types. We wou
 - **Evaluation of Garbled Circuit has not been implemented**
 - **Comprehensive testing is needed**\
 Including unit tests for core components, integration tests for end-to-end workflows, and property-based tests to ensure circuit correctness and security guarantees.
+- **Update documentation images/diagrams to reflect circuit hash changes**\
+The flow chart diagram (docs/gc_flow.png) and related documentation need to be updated to reflect the recent refactoring from using serialized circuit data to circuit hash for improved memory efficiency.
 
 ## Contributing
 

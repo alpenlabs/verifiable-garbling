@@ -74,7 +74,10 @@ pub fn garble_ckt(ckt_inputs: Circuit, label_inputs: LabelInputs) -> GarbledTabl
     let mut inner_iter = label_inputs.inner_labels.into_iter();
 
     // pre-allocate wire slots
+    println!("Allocating {wcnt} wire slots");
     let mut wires: Vec<Option<WireLabels>> = Vec::with_capacity(wcnt);
+    println!("Successfully allocated {wcnt} wire slots");
+
     // 1) load input labels
     for k0 in label_inputs.input_labels {
         let k1 = xor_labels(&k0, &delta);

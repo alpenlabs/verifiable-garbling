@@ -1301,6 +1301,7 @@ dependencies = [
  "garble",
  "risc0-zkvm 2.0.2",
  "rkyv",
+ "sha2",
  "validityproof-core",
 ]
 

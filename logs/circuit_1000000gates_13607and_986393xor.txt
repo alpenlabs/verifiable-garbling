@@ -1,6 +1,7 @@
 Circuit: 1000000 gates, 13607 AND gates, 986393 XOR gates
 Input Wire Count: 1600
 Inner Wire Count: 13607
-Input Circuit Bytes Length: 15.26 MB
-Label Bytes Length: 0.23 MB 
-Cycles: 1060175872
+Circuit Bytes Length: 15.26 MB
+Labels Bytes Length: 0.23 MB
+Total Input Bytes Length: 15.49 MB
+Cycles: 1057488896

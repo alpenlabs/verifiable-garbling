@@ -1,0 +1,7 @@
+Circuit: 45000000 gates, 615436 AND gates, 44384564 XOR gates
+Input Wire Count: 2000
+Inner Wire Count: 615436
+Circuit Bytes Length: 686.65 MB
+Labels Bytes Length: 9.42 MB
+Total Input Bytes Length: 696.07 MB
+Cycles: 58433011712
