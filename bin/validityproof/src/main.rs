@@ -54,9 +54,13 @@ fn main() {
 
     // calculate sizes - limited to u32 since guest memory is only 3GB
     // u32::MAX (4GB) provides sufficient headroom for any practical circuit
-    let circuit_bytes_len: u32 = circuit_bytes.len().try_into()
+    let circuit_bytes_len: u32 = circuit_bytes
+        .len()
+        .try_into()
         .expect("Circuit bytes length exceeds u32::MAX");
-    let labels_bytes_len: u32 = labels_bytes.len().try_into()
+    let labels_bytes_len: u32 = labels_bytes
+        .len()
+        .try_into()
         .expect("Labels bytes length exceeds u32::MAX");
 
     // turn the u32s into le bytes
