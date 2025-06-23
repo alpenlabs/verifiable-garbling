@@ -53,7 +53,7 @@ fn main() {
     let labels_bytes = to_bytes_with_alloc::<_, Error>(&labels, arena.acquire()).unwrap();
 
     // calculate sizes - limited to u32 since guest memory is only 3GB
-    // u32::MAX (4GB) provides sufficient headroom for any practical circuit
+    // u32::MAX (4GB) provides sufficient headroom 
     let circuit_bytes_len: u32 = circuit_bytes
         .len()
         .try_into()
