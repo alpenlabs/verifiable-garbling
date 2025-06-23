@@ -170,7 +170,7 @@ More detailed benchmarks and estimates of time and cost of producing proofs is a
 The current largest circuit size is 45 million gates with 1:72 ratio of AND to XOR gates.
 The bottleneck is due to way garbling currently manages space. This can be improved by:
   - Freeing gates once they are processed.
-  - Not allocating space for all wire labels at once in the begining but doing it as is needed and dropping inner wire labels that are never fed into another gate again.
+  - Not allocating space for all wire labels at once in the beginning but doing it as is needed and dropping inner wire labels that are never fed into another gate again.
 - **Only AND, XOR and INV (NOT) gates are supported as of now.**\
 Further gates can be added.
 - **NOT gate is handled as a separate gate with two entries in garbled table.**\
