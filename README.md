@@ -19,7 +19,7 @@ This means that, even before evaluation, anyone can verify that the evaluation w
 - Free-XOR optimization for efficient XOR operations
 - RISC Zero integration for proof generation  
 - Support for Bristol Fashion circuit format
-- Scalable to circuits with 30+ million gates
+- Currently supports circuit upto 45 mil gates (with 72:1 XOR to AND). See the [section on optimizations](#limitations-optimizations-and-todos) for details
 - Multi-GPU proof generation support
 
 ## Quick Start
