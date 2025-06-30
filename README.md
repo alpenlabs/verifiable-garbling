@@ -6,6 +6,7 @@
 
 > [!IMPORTANT]
 > This software is a work-in-progress meant for research and as such, is _not_ meant to be used in a production environment!
+> Also keep in mind that it was _not_ written with comprehensive protection against malicious inputs, and therefore should not be used on input data you don't trust.
 
 This is an implementation of garbled circuit with free-xor optimization as well as a zk proof of correct garbling using risczero zkvm.
 
